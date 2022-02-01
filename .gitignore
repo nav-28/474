@@ -1,1 +1,7 @@
+.DS_Store
 sipser-computation-3rd-solutions
+*.aux
+*fls
+*.log
+*.tex.aux
+.auctex-auto
