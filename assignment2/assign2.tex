@@ -1,0 +1,89 @@
+\documentclass[12pt]{exam}
+\printanswers
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, total={6in,4in}]{geometry}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\geometry{left=2cm, right=2cm, top=2cm, bottom=2cm}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+\tikzset{
+->, % makes the edges directed
+>=stealth', % makes the arrow heads bold
+node distance=3cm, % specifies the minimum distance between two nodes. Change if necessary.
+every state/.style={thick}, % sets the properties for each ’state’ node
+initial text=$ $, % sets the text that appears on the start arrow
+}
+\newcommand\scalemath[2]{\scalebox{#1}{\mbox{\ensuremath{\displaystyle #2}}}}
+
+
+
+\title{
+  Assignment 2\\
+  \large CMPUT 474
+}
+\author{Pranav Wadhwa\\1629510}
+
+\begin{document}
+\maketitle
+\noindent
+
+\begin{questions}
+
+  % Question 1
+  \question{} Are the following languages context-free? Prove your answer in each case.
+  \begin{parts}
+    \part $\Sigma = \{0,1\}^{*}, L=\{xy \,|\,|x| = |y|, x\neq y\}$
+    \part $\Sigma = \{0,1\}^{*}, L=\{w \,|\, n_{0}(w)=n_{1}(w) \text{ and } w \text{ includes the string '001'}\}$ where $n_{0}(w)$ and $n_{1}(w)$ denote the number of 0s and 1s in $w$ respectively.
+
+  \end{parts}
+
+  % Question 2
+  \question{} Let $G$ be a CFG in Chomsky normal form, and $w\in L(G)$. How long is $w$ if there is a derivation of $w$ using $p$ steps? Explain why.
+
+  % Question 3
+  \question{} Let $G$ be a CFG. Explain an algorithm to determine whether $L(G)$ is finite. (Hint: use the pumping lemma).
+
+  % question 4
+  \question{} Convert the CFG
+  \begin{gather*}
+  S\to E\\
+    E\to E+T|T\\
+    T\to T \times F|F\\
+    F\to (E)|\text{a}
+    \end{gather*}
+  to an equivalent PDA.
+
+
+  % Question 5
+  \question{} Recall that the class of context-free language is closed uner the regular operations, union, concatenation, and star. Prove that every regular language is context free by showing how to convery a regualar expression directly to an equivalent context-free grammar.
+
+
+  % Question 6
+  \question{} Consider the CFG G given by
+  \[S\to \mathsf{a}S\mathsf{b}S\,|\,\mathsf{b}S\mathsf{a}S\,|\,\epsilon\]
+  Prove that $L(G)$ is the set of strings with an equal number of $a$s and $b$s.
+
+
+  % question 7
+  \question{}
+  Show the following grammar is ambiguous by drawing parse trees. Find an unambiguous grammer for this language.
+  \[S\to \mathsf{a}S\mathsf{b}\,|\, S\mathsf{b}\,|\,\epsilon\]
+
+
+  % Question 8
+  \question{}
+  Let $P$ be the language of all palindromes over $\{0,1\}$ containing equal numbers of 0s and 1s. Show that $P$ is not context free.
+
+
+  % Question 9
+  \question{}
+  The language $L=\{ww: w\in \{a,b\}^{*}\}$ is not context free. However, show that the complement language, $\bar{L}$, is context free.
+
+  % Question 10
+  \question{}
+  Is there a \emph{universal} pusdown automaton? That is, there is a single pushdown automaton, say $M$ such that given a string $s_{G}w$, where $s_{g}$ is a string that describes a context free grammar and $w$ is an input string, $M$ accepts $s_{G}w$ if and only if $G$ generates $w$? Explain your answer.
+\end{questions}
+
+\end{document}

@@ -1,0 +1,300 @@
+
+
+\question
+Let the alphabet be $\Sigma = \{0,1\}$. Write a regular expression for the language consisting of strings that do not contain $101$. Prove your claim.
+
+
+\begin{solution}
+
+  \emph{Idea}: To write an regular expression that does not contain the string $101$, every 1 need to be followed by 2 $0$s.\\
+  \emph{Sol}:\\
+  The regular expression that does not contain the string $101$
+  \[0^{*}(1^{*}00^{*})^{*}1^{*}0^{*}\]
+
+  \emph{Proof}:
+  We can create a DFA that recognizes this expression.
+
+  \begin{tikzpicture}
+    \node[state, accepting,initial] (1) {q1};
+    \node[state, accepting, right of=1] (2) {q2};
+    \node[state, accepting, right of=2] (3) {q3};
+    \node[state, right of=3] (4) {q4};
+
+
+    \draw (1) edge[loop above] node{0} (1)
+    (1) edge[above] node{1} (2)
+    (2) edge[loop below] node{1} (2)
+    (2) edge[above] node{0} (3)
+    (3) edge[bend right, above] node{0} (1)
+    (3) edge[above] node{1} (4)
+    (4) edge[loop above] node{0,1} (4);
+
+  \end{tikzpicture}
+
+\end{solution}
+
+\question % Question 5
+Let the alphabet be $\Sigma = \{0,1,+, =\}$ and consider the language
+\[ADD = \{x = y+z | x,y,z \text{ are binary integers and } x \text{ is the sum of } y \text{ and } z\}\]
+Show that $ADD$ is not regular.
+
+\begin{solution}
+
+  \emph{Idea}: We see that the language can only contain one of $=$, $+$ each. We will use this condition to form some form of a binary equation that makes the equation incorrect.\\
+
+  \emph{Proof}:
+  Let $ADD$ be the language
+  \[ADD = \{x = y+z | x,y,z \text{ are binary integers and } x \text{ is the sum of } y \text{ and } z\}\]
+  We use the pumping lemma to prove $ADD$ is not regular. The proof is by contradiction.
+
+  Assume to the contrary that $ADD$ is regular. Let $p$ be the length given by the pumping lemma. We choose $s = 1^{p+1}=10^{p}+1^{p}$ to be a string and $s$ is a member of $ADD$. As $s$ is a member of $ADD$, $|s| \geq p$  so the pumping lemma guarantees that $s$ can be split into $s=xyz$, where for any $i \geq 0$ the string $xy^{i}z$ is in $ADD$.
+
+
+  Now we observe in $s$ that the first $p$ are all before the $=$ sign then $y$ must consists of all $1$ s. We know through the pumping lemma that $x$ and $z$ can be $\epsilon$. So we take $x=\epsilon$ and take $i=0$. Then $s\notin ADD$, as that expression in not an equation at all as there is nothing before the $=$ sign.
+
+  Another way to prove it would be to look at the string $s = xz$. Here the left hand side and the right hand sign of the equation would not be equal, making the equation not true.
+
+  Thus, there is a contradiction and $ADD$ is not regular.
+\end{solution}
+
+
+\question % question 6
+Let
+\[\scalemath{1.1}{ \Sigma_{3} = \{
+  \begin{bmatrix}
+    0\\
+    0\\
+    0
+  \end{bmatrix}
+  ,
+  \begin{bmatrix}
+    0\\
+    0\\
+    1
+  \end{bmatrix}
+  ,
+  \begin{bmatrix}
+    0\\
+    1\\
+    0
+  \end{bmatrix}
+  , \ldots,
+  \begin{bmatrix}
+    1\\
+    1\\
+    1
+  \end{bmatrix}
+  \}}\]
+That is, $\Sigma_{3}$ contains all $3$ columns of $0s$ and $1s$. A string of symbols in $\Sigma_{3}$ goves three rows of $0s$ and $1s$. Consider each row to be a bianry number \emph{ordered from the least signifcant bits on the left to the most signifcant bits on the right} (that is, reversed from the normal convention). Let
+
+\[\scalemath{1.10}{B = \{w \in \Sigma_{3}^{*}| \text{ the bottom row of } w \text{ is the sum of the top two rows} \} }\]
+For example,
+
+\[ \scalemath{1.10}{\begin{bmatrix}
+    1\\
+    1\\
+    0
+  \end{bmatrix}
+  \begin{bmatrix}
+    1\\
+    0\\
+    0
+  \end{bmatrix}
+  \begin{bmatrix}
+    0\\
+    0\\
+    1
+  \end{bmatrix}
+  \in B, \text{but}
+  \begin{bmatrix}
+    1\\
+    0\\
+    1
+  \end{bmatrix}
+  \begin{bmatrix}
+    0\\
+    0\\
+    1
+  \end{bmatrix}
+  \notin B.
+}\]
+Show that $B$ is regular.
+
+\begin{solution}
+
+  To show that $B$ is regular we can draw a NFA that recognizes $B$.
+
+  \emph{Idea}: Since the alphabet only recognizes columns $0$s and $1$s. We will have to keep count of the carry and take it over the next string. We can easily count it using states as the carry over bit can only be $0$ or $1$. So there will be 2 state $q_{0}$ and $q_{1}$ in the NFA which will only take a subset of strings from $\Sigma_{3}$ and rest would not be accepted.
+
+  \emph{Proof}:
+  Let $M$ be a NFA that recognizes $B$ such that $M = (Q,\Sigma_{r}, \delta, q_{0}, F)$.
+  \begin{enumerate}
+    \item{} $Q = \{q_{0}, q_{1}\}$
+    \item{} $\Sigma_{3} =\{
+    \begin{bmatrix}
+      0\\
+      0\\
+      1\\
+    \end{bmatrix}
+    \begin{bmatrix}
+      0\\
+      0\\
+      1
+    \end{bmatrix}
+    , \ldots,
+    \begin{bmatrix}
+      1\\
+      1\\
+      1\\
+    \end{bmatrix}\}$
+    \item{} Start State: $q_{0}$
+    \item{} $F = q_{0}$
+    \item{} $\delta$ is given by:
+
+    $\delta(q_{0}, a) = q_{0}$ if $a = \begin{bmatrix}
+      0\\
+      0\\
+      0
+    \end{bmatrix},
+    \begin{bmatrix}
+      0\\
+      1\\
+      1
+    \end{bmatrix},
+    \begin{bmatrix}
+      1\\
+      0\\
+      1
+    \end{bmatrix}$
+
+    $\delta(q_{0}, a) = q_{1}$ if $a = \begin{bmatrix}
+      1\\
+      1\\
+      0
+    \end{bmatrix}$
+
+    $\delta(q_{q}, a) = q_{1}$ if $a = \begin{bmatrix}
+      1\\
+      0\\
+      0
+    \end{bmatrix},
+    \begin{bmatrix}
+      0\\
+      1\\
+      0
+    \end{bmatrix},
+    \begin{bmatrix}
+      1\\
+      1\\
+      1
+    \end{bmatrix}$
+
+    $\delta(q_{1}, a) = q_{0}$ if $a = \begin{bmatrix}
+      0\\
+      0\\
+      1
+    \end{bmatrix}$
+  \end{enumerate}
+
+  Rest of the string not mentioned above would not be accepted by $M$.
+
+  For example: We can see that the string $\begin{bmatrix}
+    1\\
+    0\\
+    1
+  \end{bmatrix} \begin{bmatrix}
+    0\\
+    0\\
+    1
+    \end{bmatrix}$ would not be accepted by $M$ as after accepting $\begin{bmatrix}1\\0\\1\end{bmatrix}$ the machine is is at state $q_{0}$. There is no transition state for $\begin{bmatrix}0\\0\\1\end{bmatrix}$ from $q_{0}$ so the string is not accepted.
+
+\end{solution}
+
+
+
+
+\question % question 7
+Suppost $A$ is a regular language. Show that the language
+\[B = \{x | \text{there is some } y \text{ such that } |x| = |y| \text{ and } xy \in A \}\]
+is also regular.
+
+\begin{solution}
+
+  \emph{Idea}: Since $xy$ is a concatenation of 2 strings. We can use the proof of clousure under concatenation.
+
+  \emph{Proof}: Assume that $A$ is a regular language and $B = \{x|{} \text{there is some }y \text{ such that } |x| = |y| \text{ and } xy\in A\}$. Let $xy$ be a string such that $xy\in A$, $|x|=|y|$ and $x\in B$. We want to show that $B$ is regular.
+
+
+  Lets assume that $B$ is not a regular language. Under the proof of closure any expression $R = R_{1} \circ R_{2}$ where $R_{1} \text{and } R_{2}$ are regular expression would result in a regular expression $R$. Since $B$ is not regular then $x$ is not a regular expression. But $x\circ y\in A$ which is a regular language. This is a contradiction under closure of concatenation. Hence $B$ is also regular.
+
+
+\end{solution}
+
+
+
+\question % question 8
+\begin{parts}
+  \part Let $A = \{1^{k}y | y\in \{0,1\}^{*} \text{ and } y \text{ contains at least } k\text{ } 1s, \text{for } k\geq 1\}$. Show that $A$ is regular.
+
+  \part Let $B = \{1^{k}y | y\in \{0,1\}^{*} \text{ and } y \text{ contains at most } k\text{ }1s, \text{for } k\geq 1 \}$/ Show that $B$ is not regular.
+\end{parts}
+
+
+\begin{solution}
+
+  \begin{parts}
+
+
+    \part{}
+    \emph{Idea}: Since the question doesn't restrict the value of $k$ we can set $k=1$. This means that every string should start with $1$ and then concatenate $1y$ so that the restriction is fulfilled.
+
+    A regular expression describing $A$:
+    \[10^{*}1\{0,1\}^{*}\]
+
+    A DFA describing the regular expression.
+
+    \begin{tikzpicture}
+      \node[state, initial] (0) {q0};
+      \node[state, right of=1] (1) {q2};
+      \node[state, right of=3] (2) {q3};
+
+
+      \draw (0) edge[above] node{1} (1)
+      (1) edge[above] node{1} (2)
+      (1) edge[loop above] node{0} (1)
+      (2) edge[loop right] node{0,1} (2);
+    \end{tikzpicture}
+
+    \part{} Let $B = \{1^{k}b | b\in \{0,1\}^{*} \text{ and } b \text{ contains at most } k\text{ }1s, \text{for } k\geq 1 \}$/ Show that $B$ is not regular.
+
+    We will use the pumping lemma to show that $B$ is not regular.
+
+    Assume the contrary that $B$ is regular. Let $p$ be the pumping lenth given by the pumping lemma. Let s be a string $s = 1^{p}01^{p}$ and $s\in B$. The lemma guarantees that s can be split into $s = xyz$, where for any $i\geq 0$ $xy^{i}z \in B$ and $|xy| \le p$. Clearly, $y$ contains the substring of $1^{p}$ to satify the condition. Let the $n=|y|$. The string $xz=1^{(p-n)}01^{p} = 1^{p-n}b$ where b contains $p$ $1s$. Since $p-n < p$ the string $xz$ is not in $B$ which is a contradiction. So $B$ is not regular.
+
+    \end{parts}
+\end{solution}
+
+
+\question % question 9
+Every regular expression specifies a regular language over string from a finite alphabet $\Sigma$. However, the set of regular expressions, itself is a language over strings from an expanded alphabet $\Sigma \cup \{\epsilon, \emptyset, (,), \cup, \circ, *\}$. Is the set of regular expression a regular language. Explain your answer.
+
+
+\begin{solution}
+  Assume a $R_{1}$ and $R_{2}$ to be regular expression from the expanded alphabet $\Sigma \cup \{\epsilon, \emptyset, (,), \cup, \circ, *\}$. Take $\{R_{1}, R_{2}\}$ to be the set of these 2 regular expressions. Then this set would describle a regular language described by $R_{1}\cup R_{2}$.
+\end{solution}
+
+
+\question % question 10
+Is there a \emph{universal} finite automation? That is, is there a single finite automaton, say $M$, such that given a string $s_{N}w$, where $s_{N}$ is a string that describes a finite automaton $N$ and $w$ is an input string, $M$ accepts $s_{N}w$ if and only if $N$ accepts $w$? Explain your answer.
+
+\begin{solution}
+
+  Assume that there is universal finite automation $M$ described by this 5-tuple $(Q,\Sigma, \delta, q_{0}, F)$ that takes a $s_{N}w$ where $s_{N}$ describes a finite automaton $N$ and $w$ is an input string that $N$ accepts. Here $N$ is described as $(Q_{N}, \Sigma_{N}, \delta_{N}, q_{N_{0}}, F_{n})$
+
+  We know that there are countable infinite regular languages which has a countable infinite automaton. Lets assume that the finite automation $N$ has a total number of state $|Q_{N}| = n$
+  Let's say that in the universal automaton $M$ there are $m$ set of state. So $|Q| = m $.
+  For the universal automation to give the correct result it needs to have atleast $m \ge n$. Now assumne another finite automation $P$ which has number of state $|Q_{P}| = p > m+1$ and assume a string $s_{P}w_{P}$ where $s_{P}$ describes $P$ and $w_{p}$ is an input string.
+
+ But M needs $|Q|\ge |Q_{p}|$ to accept the given string. This casues a contradiction. Therfore, $M$ is is not a universal finite automation.
+
+\end{solution}
