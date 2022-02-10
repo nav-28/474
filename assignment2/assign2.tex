@@ -7,6 +7,7 @@
 \usepackage{amssymb}
 \geometry{left=2cm, right=2cm, top=2cm, bottom=2cm}
 \usepackage{tikz}
+\usepackage{tikz-qtree}
 \usetikzlibrary{automata, positioning, arrows}
 \tikzset{
 ->, % makes the edges directed
@@ -70,6 +71,40 @@ initial text=$ $, % sets the text that appears on the start arrow
   \question{}
   Show the following grammar is ambiguous by drawing parse trees. Find an unambiguous grammer for this language.
   \[S\to \mathsf{a}S\mathsf{b}\,|\, S\mathsf{b}\,|\,\epsilon\]
+
+  \begin{solution}
+
+    Take this string generated from the grammer and its corresponding parse tree.
+    \[abb\]
+
+    \begin{tikzpicture}
+    [
+edge from parent path =  {(\tikzparentnode\tikzparentanchor) .. controls +(0,-1) and +(0,1) .. (\tikzchildnode\tikzchildanchor)}
+    ]
+      \node (q0) {S}
+      child {node {a}}
+      child {node {S}
+        child {node {Sb}
+          child {node {$\epsilon$}}
+          child {node{b}}
+        }
+      }
+      child {node {b}};
+
+      \node [right=10cm of q0] {S}
+      child {node {S}
+        child {node {a}}
+        child {node {S}
+          child {node {$\epsilon$}}
+        }
+        child {node {b}}
+      }
+      child {node {b}};
+    \end{tikzpicture}
+
+
+
+  \end{solution}
 
 
   % Question 8
