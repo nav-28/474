@@ -39,8 +39,13 @@ initial text=$ $, % sets the text that appears on the start arrow
   \begin{parts}
     \part $\Sigma = \{0,1\}^{*}, L=\{xy \,|\,|x| = |y|, x\neq y\}$
     \part $\Sigma = \{0,1\}^{*}, L=\{w \,|\, n_{0}(w)=n_{1}(w) \text{ and } w \text{ includes the string '001'}\}$ where $n_{0}(w)$ and $n_{1}(w)$ denote the number of 0s and 1s in $w$ respectively.
+  \end{parts}
 
     \begin{solution}
+
+      \begin{parts}
+        \part{}
+
       Yes, the language is context free. We observe in language $L$ that it is made up of 2 strings $x$ and $y$ which are of same length but the strings are not equal. So the strings differ on some character $i$ and we can make a correcponding context-free grammar around this rule.
 
       \begin{gather*}
@@ -50,30 +55,41 @@ initial text=$ $, % sets the text that appears on the start arrow
         X\to 0|1
       \end{gather*}
 
+      \part{}
+      No, the language is not context-free. We will use the pumping lemma to show this.
+      Assume that $L$ is a CFL and obtain a contradiction. Let $p$ be the pumping length for $L$ and select a string that include $001$ and has equal number of $0s$ and $1s$. So let $s = 0010^{n-2}1^{n-1}$ where $n \ge 2$.\\
+      We can check that $s$ is in $L$. For example, take $n = 3$. Then $s = 001011$ which satisfies the condition for $L$.
 
+      By the pumping lemma we may choose $u,v,x,y,z$ such that $|vy|> 0$ and $|vxy| < p$. We look over different combination for $v$ and $y$.\\
+      Case 1: $vxy$ are not around the midpoint\\
+      If $vxy$ are not around the midpoint then pumping $s$ up to $uv^{2}xy^{2}z$ would cause an unequal number of $0s$ and $1s$ as one side would be greater than the other.\\
+      Case 2: $vxy$ is around the middle\\
+      Keeping in my the third condition of the pumping lemma, $|vxy| < p$ we take $vxy$ around the middle of the string. We get that $v$ consists of $0$ and $y$ consists of $1$ and $x$ contains both $0s$ and $1s$. Then pumping $s$ down to $uxz$ then number of $0s$ and $1s$ are not equal. Therfore, $uxz$ would not be in $L$.\\
+      We arrive at a contradiction and $L$ is not context-free.
+
+    \end{parts}
     \end{solution}
 
 
-  \end{parts}
 
   % Question 2
   \question{} Let $G$ be a CFG in Chomsky normal form, and $w\in L(G)$. How long is $w$ if there is a derivation of $w$ using $p$ steps? Explain why.
 
   \begin{solution}
-
     Every context-free grammar that is in Comsky normal form has rules of the form
     \begin{gather*}
       A\to BC\\
       A\to a
     \end{gather*}
-    We have $G$ a CGC in Chimsky normal form and $w\in L(G)$. $w$ is derivated in $p$ steps.
-    Every derivattion in this form goes from $A\text{ (non-terminal)} \to BC\text{ (non-terminal)(non-terminal)}$ or $A\text{ (non-terminal)}\to a \text{ terminal }$.
+    We have $G$ a CGC in Chimsky normal form and $w\in L(G)$. \\$w$ is derivated in $p$ steps.
+    Every derivattion in this form goes from \[A\text{ (non-terminal)} \to BC\text{ (non-terminal)(non-terminal)}\] or \[A\text{ (non-terminal)}\to a \text{ terminal }\]
 
     To derive a string of length $w$ we will have $w$ derivation of the first form from $A\to BC$ to a terminal $A\to a$ while expanding $B$ as each step adds a total of $+1$ to each step. Then we will have a total of $w-1$ derivation from $A\to C$ while expanding $C$ to a terminal as the start symbol is already counted.
 
     So the total number of derivations are $w + (w-1) = 2w-1$. We are given than the total derivations are $p$.
 
     So, $p = 2w-1$ then $w = \frac{p+1}{2}$
+
 
 
   \end{solution}
@@ -241,7 +257,13 @@ edge from parent path =  {(\tikzparentnode\tikzparentanchor) .. controls +(0,-1)
   \end{solution}
   % Question 10
   \question{}
-  Is there a \emph{universal} pusdown automaton? That is, there is a single pushdown automaton, say $M$ such that given a string $s_{G}w$, where $s_{g}$ is a string that describes a context free grammar and $w$ is an input string, $M$ accepts $s_{G}w$ if and only if $G$ generates $w$? Explain your answer.
+  Is there a \emph{universal} pushdown automaton? That is, there is a single pushdown automaton, say $M$ such that given a string $s_{G}w$, where $s_{g}$ is a string that describes a context free grammar and $w$ is an input string, $M$ accepts $s_{G}w$ if and only if $G$ generates $w$? Explain your answer.
+
+
+  \begin{solution}
+    No, we can't have a universal pushdown automata. We can use the pumping lemma to demonstrate this. Assume that there is a universal pushdown automaton $M$ such that it accepts an input string $w$. According to the pumping lemma this pushdown automaton has a pumping length $p$ which allows the language accepted by the automaton to be pumped up or down.
+    Preciesly, the string $w = uv^{i}xy^{i}z$ can be pumped up or down under the condition $|vxy|\leq p$. The universal automaton would have to have a variable $p$ to accept string from different grammar to fulfill the conditions of the pumping lemma. But since $M$ has a constant $p$, accepting string from different grammar is not possible.
+  \end{solution}
 \end{questions}
 
 \end{document}
