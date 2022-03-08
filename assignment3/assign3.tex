@@ -1,0 +1,120 @@
+\documentclass[12pt]{exam}
+\printanswers
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, total={6in,4in}]{geometry}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{multicol}
+\usepackage{amssymb}
+\geometry{left=2cm, right=2cm, top=2cm, bottom=2cm}
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\usepackage{fixltx2e}
+\usepackage{makecell}
+\usetikzlibrary{automata, positioning, arrows}
+\tikzset{
+->, % makes the edges directed
+>=stealth', % makes the arrow heads bold
+node distance=3cm, % specifies the minimum distance between two nodes. Change if necessary.
+every state/.style={thick}, % sets the properties for each ’state’ node
+initial text=$ $, % sets the text that appears on the start arrow
+}
+\newcommand\scalemath[2]{\scalebox{#1}{\mbox{\ensuremath{\displaystyle #2}}}}
+
+
+
+\title{
+  Assignment 2\\
+  \large CMPUT 474
+}
+\author{Pranav Wadhwa\\1629510}
+
+\begin{document}
+\maketitle
+\noindent
+
+
+\begin{questions}
+
+  \question{}
+  A \textbf{Turning mahine with doubly infinite tape} is similar to an ordinary Turing machine, but its tape is infinite to the left as well as to the right.
+  The tape is initially filled with blanks except for the portion that contains the input.
+  Computations is defined as usual except that the head never encounters an end to the tape as it moves leftward.
+  Show that this type of Turing Machine recognizes the class of Turing-recognizable languages.
+
+
+
+  \question{}
+  Show that the collection of decidable languages is closed under the operation of
+  \begin{multicols}{2}
+  \begin{enumerate}
+    \item union
+    \item concatenation
+    \item star
+    \item complementation
+    \item intersection
+  \end{enumerate}
+  \end{multicols}
+
+
+  \question{}
+  Show that the collection of Turing-recognizable languages is closed under the operation of
+
+  \begin{multicols}{2}
+  \begin{enumerate}
+    \item union
+    \item concatenation
+    \item star
+    \item intersection
+    \item homomorphism
+  \end{enumerate}
+  \end{multicols}
+
+  (Note that you can fine the definition of homomorphism on Page 93, Problem 1.66)
+
+
+  \question{}
+  Prove the following language is decidable
+
+  \[L=\{\langle M \rangle :M\text{ is a DFA that accepts some string of the form } ww^{R} \text{ for } w\in \{0,1\}^{*}\}\]
+
+
+  \question{}
+  Show that the following langauges are undecidable
+
+  \begin{enumerate}
+    \item Set of descriptions of Turing machines $\langle M \rangle$ such that $\emptyset \in L(M)$
+
+    \item Set of decriptions of pairs of Turing machines $\langle M, M' \rangle$ such that $L(M)\cap L(M') = \emptyset$.
+          Also show that this language is recognizable.
+
+  \end{enumerate}
+
+
+  \question{}
+  Let $A$ and $B$ be two disjoint languages. Say that language $C$ separates $A$ and $B$ if $A\subseteq C$ and $B\subset \bar C$. Show that any two disjoint co-recognizable languages are separable by some decidable language.
+
+
+  \question{}
+  Say that a variable $A$ in CFL $G$ is usable if it appears ni some derivation of some strings $w\in G$. Given a CFG $G$ and a variable $A$, consider the problem of testing whether $A$ is usable.
+  Formulae this problem as a language and show that it is decidable.
+
+
+  \question{}
+  Let $L$ be a CFL. Is $\{1\}^{*}\subseteq L$ a decidable problem?
+  Is $\{1\}^{*}=L$ a decidable problem?
+
+  \question{}
+  Consider the problem of determining whether a turing machine $M$ on an input $w$ ever attempts to move its head left at any point during its computation on $w$. Formulate this problem as a language and show that it is decidable.
+
+
+  \question{}
+  Consider the problem of determining whether a Turing machine $M$ on an input $w$ ever
+  attempts to move its head left when its head is in the left-most tape cell.
+  Formulate this problem as a language and show that it is undecidable.
+
+\end{questions}
+
+
+
+\end{document}
