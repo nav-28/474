@@ -6,10 +6,12 @@
 \usepackage{amsmath}
 \usepackage{multicol}
 \usepackage{amssymb}
+\usepackage{enumerate}
 \geometry{left=2cm, right=2cm, top=2cm, bottom=2cm}
 \usepackage{tikz}
 \usepackage{tikz-qtree}
 \usepackage{fixltx2e}
+\usepackage{tabto}
 \usepackage{makecell}
 \usetikzlibrary{automata, positioning, arrows}
 \tikzset{
@@ -36,13 +38,23 @@ initial text=$ $, % sets the text that appears on the start arrow
 
 \begin{questions}
 
-  \question{}
+  \question{} % question 1
   A \textbf{Turning mahine with doubly infinite tape} is similar to an ordinary Turing machine, but its tape is infinite to the left as well as to the right.
   The tape is initially filled with blanks except for the portion that contains the input.
   Computations is defined as usual except that the head never encounters an end to the tape as it moves leftward.
   Show that this type of Turing Machine recognizes the class of Turing-recognizable languages.
 
+  \begin{solution}
+    Lets first examine what happen in a regular turing machine when its head is at the left-end of the tape.
+    If the head of the machine is at the left-end and it tries to do an $\delta(q,\sigma) = (q',\sigma ', L)$ but the head stays at the same place.
 
+    We want to show that Turing Machine with doubly infinite tape recognizes the class of Turing-recognizable languages.
+    We can do this by making the new TM simulate the left bounded machine by adding a new symbol to mark the left end of the regular TM's tape and prevent the head from moving any further left off the that mark.
+
+    To simulate the doubly infinite tape by an regular TM we can use 2 tapes. As we already know that we can easily simulate multiple tapes on a single tape, we can use this knowledge to simulate the doubly infinite tape.
+    The first tape would have the input symbol and the right bound and the second tape would have the left bound in reverse order. At the start of the computation the second tape would be black.
+    This way we can get a regular TM to simulate a doubly infinite TM.
+  \end{solution}
 
   \question{}
   Show that the collection of decidable languages is closed under the operation of
@@ -56,7 +68,49 @@ initial text=$ $, % sets the text that appears on the start arrow
   \end{enumerate}
   \end{multicols}
 
+  \begin{solution}
+    Let there be 2 decidable languages $L_{1}$ and $L_{2}$ and their respective turing machines that accept then $M_{a}$ and $M_{2}$.
+    As both $M_{1}$ and $M_{2}$ are decidable both machine will halt.
 
+    \begin{enumerate}
+      \item union
+
+            We construct a turing machine $M$ that recognizes $L_{1}\cup L_{2}$ such that
+
+            \begin{enumerate}[i]
+            \item Read input string $w$
+            \item  Run $M_{1}$ on string $w$.\\
+                    \null \quad If $M_{w}$ return reject goto next step. Else return accept
+            \item Run $M_{2}$ on string $w$.\\
+                    \null \quad If $M_{2}$ return reject then return reject. Else return accept
+
+            \end{enumerate}
+
+
+      \item concatenation
+
+            We will use the non-deterministic TM to prove this. The concatenation of $L_{1}$ and $ L_{2}$ is defined as $L_{1}\circ L_{2} = \{xy| x\in L_{1} \text{ and } y\in L_{2}\}$.
+            Consider the non-deterministic TM $M$ which would take an input $w$ and partition it into a form $w = xy$ where $x \in L_{1}$ and $y\in L_{2}$.
+
+            \begin{enumerate}[i]
+              \item Read the input $w$ and partition it into 2 string $w = xy$
+              \item Simulate $M_{1}$ on $x$ and simulate $M_{2}$ on $y$
+              \item return accept if both $M_{1}$ and $M_{2}$ accept it, else return reject.
+            \end{enumerate}
+
+      \item star
+
+      \item complementation
+
+            We have a TM $M$ which simulates $L_{1}$. If $L_{1}$ rejects input $w$ then $M$ return accepts and it $L_{1}$ accepts input $w$ then $M$ returns rejects.
+
+      \item intersection
+
+            Intersection is similar to union. Let $M$ be a TM which simulates $L_{1}\cap L_{2}$  where we run an input $w$ on both machines and $M$ return accept only when both $L_{1}$ and $L_{2}$ return accept else it return reject.
+
+    \end{enumerate}
+
+  \end{solution}
   \question{}
   Show that the collection of Turing-recognizable languages is closed under the operation of
 
