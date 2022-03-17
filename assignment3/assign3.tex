@@ -56,7 +56,7 @@ initial text=$ $, % sets the text that appears on the start arrow
     This way we can get a regular TM to simulate a doubly infinite TM.
   \end{solution}
 
-  \question{}
+  \question{} % question 2
   Show that the collection of decidable languages is closed under the operation of
   \begin{multicols}{2}
   \begin{enumerate}
@@ -89,7 +89,7 @@ initial text=$ $, % sets the text that appears on the start arrow
 
       \item concatenation
 
-            We will use the non-deterministic TM to prove this. The concatenation of $L_{1}$ and $ L_{2}$ is defined as $L_{1}\circ L_{2} = \{xy| x\in L_{1} \text{ and } y\in L_{2}\}$.
+            We will use the \textbf{non-deterministic} TM to prove this. The concatenation of $L_{1}$ and $ L_{2}$ is defined as $L_{1}\circ L_{2} = \{xy| x\in L_{1} \text{ and } y\in L_{2}\}$.
             Consider the non-deterministic TM $M$ which would take an input $w$ and partition it into a form $w = xy$ where $x \in L_{1}$ and $y\in L_{2}$.
 
             \begin{enumerate}[i]
@@ -111,7 +111,7 @@ initial text=$ $, % sets the text that appears on the start arrow
     \end{enumerate}
 
   \end{solution}
-  \question{}
+  \question{} %question 3
   Show that the collection of Turing-recognizable languages is closed under the operation of
 
   \begin{multicols}{2}
@@ -127,22 +127,66 @@ initial text=$ $, % sets the text that appears on the start arrow
   (Note that you can fine the definition of homomorphism on Page 93, Problem 1.66)
 
 
-  \question{}
+  \question{} % question 4
   Prove the following language is decidable
 
   \[L=\{\langle M \rangle :M\text{ is a DFA that accepts some string of the form } ww^{R} \text{ for } w\in \{0,1\}^{*}\}\]
 
+  \begin{solution}
+
+    The string of the form $ww^{R}$ for $w\in \{0,1\}^{*}$ is not a regular language but it is a context-free language. Let $A = \{ x| \text{ x is of form } w\in \{0,1\}^{*} \}$.
+
+    It is already known that context-free langugaes are decidable. We need to show that $M$ accept string of form $A$ is decidable. We can contruct a decider TM $D_{M}$ which decides on $L$.\\
+    $D_{M}$ on input $<M>$ where $M$ is a DFA:
+    \begin{enumerate}
+      \item Construct $B=A\cap L(M)$. $B$ is a CFL as $A$ is a CFL. (This is done through another TM which converts the DFA into a RE and does the intersection with $A$)
+      \item If $B$ is empty return reject else return accept.
+    \end{enumerate}
+
+    Therefore, $L$ is decidable.
+  \end{solution}
 
   \question{}
   Show that the following langauges are undecidable
 
-  \begin{enumerate}
+  \begin{enumerate}[a)]
     \item Set of descriptions of Turing machines $\langle M \rangle$ such that $\emptyset \in L(M)$
 
     \item Set of decriptions of pairs of Turing machines $\langle M, M' \rangle$ such that $L(M)\cap L(M') = \emptyset$.
           Also show that this language is recognizable.
 
   \end{enumerate}
+
+
+  \begin{solution}
+
+    \begin{enumerate}[a)]
+      \item Let $L=\{\langle M\rangle| M\in TM \text{ and } \emptyset \in L(M)\}$ and we show that $L$ is undecidable.
+
+            Assume the contrary that $L$ is decidable and TM $M_{L}$ can decide on $L$. We show that $M_{L}$ can be used to decide $A_{TM}$. Then we construct TM $D$ such that:
+
+            $D(\langle M\rangle)$
+            \begin{enumerate}[1.]
+
+              \item call $M_{L}(\langle M \rangle)$
+              \item if $M_{L}$ accepts $\langle M \rangle$\\
+                    \null\quad Simulate $M$ on string $x$ (must halt)\\
+                    \null \quad if $M$ accepts, return accept, else return reject
+              \item If $M_{L}$ rejects $\langle M\rangle$ return reject.
+            \end{enumerate}
+
+            This contradicts the undecidability of $A_{TM}$ so $L$ is undecidable.
+
+
+      \item We have 2 TM $M$ and $M'$ which simulate the languages $L(M)$ and $L(M')$. We know that decidable languages are closed under intersection then $L(M)\cap L(M')$ is also a decidable language which must have an equivalent TM say $I$.
+
+            Let $L=\{\langle M,M'\rangle| L(M)\cap L(M') = \emptyset\} = \{\langle I\rangle| I\in TM \text{ and } L(I) = \emptyset\}$
+
+            We know that $E_{TM}$ is undecidable and $L$ is also of the same form. Therefore, this language $L$ is also undecidable.
+    \end{enumerate}
+
+
+  \end{solution}
 
 
   \question{}
