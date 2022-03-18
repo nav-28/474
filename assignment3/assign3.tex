@@ -127,6 +127,40 @@ initial text=$ $, % sets the text that appears on the start arrow
   (Note that you can fine the definition of homomorphism on Page 93, Problem 1.66)
 
 
+  \begin{solution}
+    Let there be 2 Turing-recognizable languages $L_{1}$ and $L_{2}$ and their respcitive TM $M_{1}$ and $M_{2}$.
+    \begin{enumerate}
+      \item union
+
+            We construct TM $U$ that recognizes $L_{1}\cup L_{2}$ such that:
+            \begin{enumerate}[1.]
+              \item Simulate $M_{1}$ and $M_{2}$ on string $w$ simultaneously.
+              \item Do a step of $M_{1}$ first then do a step of $M_{2}$
+              \item If any of the machine return accept then return accept.
+            \end{enumerate}
+
+
+      \item concatenation
+            This is similar to concatenation of decidable languages. Let a non-deterministic TM simulate $M_{1}$ and $M_{2}$ on a string $w$ which can be partitoned into $w=xy$ where $x\in L_{1}$ and $y\in L_{2}$.
+            We simulate $M_{1}$ on $x$ and $M_{2}$ on $y$ simulataneouly. If both accept then return accept.
+
+      \item star
+
+      \item intersection
+
+            This operation is similar to the union of decidable languages. Let a TM $I$ simulate input $w$ on $M_{1}$ then on $M_{2}$. If both return accept then return accept else return reject.
+
+      \item homomorphism
+
+            \textbf{Def:} A \emph{homomorphism} is a function $f:\Sigma\to \Gamma^{*}$ from one alphabet to strings over another alphabet.
+
+
+    \end{enumerate}
+
+
+  \end{solution}
+
+
   \question{} % question 4
   Prove the following language is decidable
 
@@ -146,7 +180,7 @@ initial text=$ $, % sets the text that appears on the start arrow
     Therefore, $L$ is decidable.
   \end{solution}
 
-  \question{}
+  \question{} %question 5
   Show that the following langauges are undecidable
 
   \begin{enumerate}[a)]
@@ -179,7 +213,6 @@ initial text=$ $, % sets the text that appears on the start arrow
 
 
       \item We have 2 TM $M$ and $M'$ which simulate the languages $L(M)$ and $L(M')$. We know that decidable languages are closed under intersection then $L(M)\cap L(M')$ is also a decidable language which must have an equivalent TM say $I$.
-
             Let $L=\{\langle M,M'\rangle| L(M)\cap L(M') = \emptyset\} = \{\langle I\rangle| I\in TM \text{ and } L(I) = \emptyset\}$
 
             We know that $E_{TM}$ is undecidable and $L$ is also of the same form. Therefore, this language $L$ is also undecidable.
@@ -189,27 +222,121 @@ initial text=$ $, % sets the text that appears on the start arrow
   \end{solution}
 
 
-  \question{}
+  \question{} %question 6
   Let $A$ and $B$ be two disjoint languages. Say that language $C$ separates $A$ and $B$ if $A\subseteq C$ and $B\subset \bar C$. Show that any two disjoint co-recognizable languages are separable by some decidable language.
 
 
-  \question{}
-  Say that a variable $A$ in CFL $G$ is usable if it appears ni some derivation of some strings $w\in G$. Given a CFG $G$ and a variable $A$, consider the problem of testing whether $A$ is usable.
+  \question{} %question 7
+  Say that a variable $A$ in CFL $G$ is usable if it appears in some derivation of some strings $w\in G$. Given a CFG $G$ and a variable $A$, consider the problem of testing whether $A$ is usable.
   Formulae this problem as a language and show that it is decidable.
 
+  \begin{solution}
+    Let there be a CFG $G$ which has a variable $A$. We define that a variable is usable if it appears in some derivation of some strings. Or, more precisely, $A$ appears in the the rule of some other variable such as $X$ such that $X\to X_{1}AX_{2}$ is a rule in CFG $G$.
+    Here $X_{1}$ and $X_{2}$ can be $\epsilon$ or derive other languages $L(X_{1})$ or $L(X_{2})$.
 
-  \question{}
+    Consider the language $U = \{\langle G,A\rangle| G \text{ is a CFG }, A \text{ is usable for G }\}$. We show that $U$ is decidable.
+    Let $D$ be a decider TM which decides on $U$ and it works such that
+
+    On Input of $\langle G,A\rangle$:
+    \begin{enumerate}
+      \item Let $S$ be a starting variable. It uses breath first search to look for any derivatation from $S$ to $A$. If there are no derivation to $A$ it returns reject else move to next step.
+      \item We check using $E_{CFG}$ that $L(A)$ is not empty. If $E_{CFG}$ returns reject then then $D$ returns accept else $D$ returns reject.
+    \end{enumerate}
+
+    Therefore, $U$ is decidable
+
+  \end{solution}
+
+  \question{} %question 8
   Let $L$ be a CFL. Is $\{1\}^{*}\subseteq L$ a decidable problem?
   Is $\{1\}^{*}=L$ a decidable problem?
+
+  \begin{solution}
+    We know that $\{1\}^{*}$ is a regular language and the intersection of a regular language and a CFL is a CFL.
+
+    We will use this knowledge to construct a decider TM $D$ such that:
+
+    On input of a CFL $L$
+    \begin{enumerate}[1.]
+      \item take the intersection: $L\cap \{1\}^{*} = A$
+      \item Check that if $A=\emptyset$
+      \item If A is empty then return false else return true.
+    \end{enumerate}
+
+    So $\{1\}^{*}\subseteq L$ is a decidable problem.
+
+
+    Now to check if $\{1\}^{*} = L$ is decidable problem.
+    We can't take the intersection like the previous problem as $EQ_{CFG}$ is undecidable.
+    Instead,we will look at how the CFG generates it strings. The idea is to look at all the rules in the CFG in the chomsky normal form and check if the terminal variables are all $1s$ or not.
+
+    So let a TM $D$ be a decider such that:
+
+    On input of a CFL $L$:
+    \begin{enumerate}
+      \item Convert the CFL into chomsky normal form.
+      \item Look at all the terminal variables of the CFG.
+      \item If there is a production rule (other than the start variable) such
+            that it has a terminal symbol other than 1, return reject.
+      \item if all production rules with a terminal symbols are 1, then return accept.
+    \end{enumerate}
+
+    So, $\{1\}^{*} = L$ is also a decidable problem.
+
+
+  \end{solution}
 
   \question{}
   Consider the problem of determining whether a turing machine $M$ on an input $w$ ever attempts to move its head left at any point during its computation on $w$. Formulate this problem as a language and show that it is decidable.
 
+  \begin{solution}
+
+    let $L=\{\langle M,w\rangle| M \text{ moves its head left on input } w\}$. We show that $L$ is decidable using a TM $LM$.
+
+    We construct TM $LM$ such that it simulates $M$ on input $w$. We will have a few cases during the execution on $w$ such as:
+
+    \begin{enumerate}[a)]
+      \item If the head ever moves left then return accept.
+      \item If the head never moves left and accepts the input.
+      \item if the head stays in the same position during the execution after reading through the input and going over $|Q|$ (number of states) steps then return reject.
+      \item if the head moves right and have gone over the input and $|Q|$ (number of states) steps we can conclude that $M$ is in a cycle and thereby never moving left.
+    \end{enumerate}
+
+    We can formulate this into an high level description of the machine $LM$ such that if $M$ moves left withing $w+|Q|$ steps then return accept else return reject as after that steps the machine enters into a cycle.
+
+    Therefore, the language $L$ is decidable.
+
+
+
+    
+  \end{solution}
 
   \question{}
   Consider the problem of determining whether a Turing machine $M$ on an input $w$ ever
   attempts to move its head left when its head is in the left-most tape cell.
   Formulate this problem as a language and show that it is undecidable.
+
+
+  \begin{solution}
+
+    Let $L = \{\langle M,w\rangle| \text{head attempts to move its head left when head is in the left-move tape cell }\}$. We show that $L$ is undecidable using reduction of $HALT_{TM}$.
+
+    Let $LM$ be the TM that run $M$ on input $w$ but puts a $\#$ symbol on the left end of the tape and shifts the input after $\#$ symbol.
+
+    Let $LM'$ be the decider TM and it run on input $\langle M,w\rangle$ as follows:
+    \begin{enumerate}[1.]
+      \item Run TM $LM$ to simulate $M$ on input $w$ as described above.
+      \item If $LM$ reaches the $\#$ symbol during its execution, then it moves it head one step to the right but remains in the same state, then it return accept, else return reject.
+      \item if $LM$ accept\\
+            Simulate $M$ on $w$ (must halt)
+            if $M$ return accept, return accept else return accept
+      \item If $LM$ rejects $M$ and $w$\\
+            then return reject
+    \end{enumerate}
+
+    This contradicts the undecidability of $HALT_{TM}$ so $L$ is also undecidable.
+
+  \end{solution}
 
 \end{questions}
 
