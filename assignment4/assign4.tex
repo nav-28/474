@@ -1,0 +1,107 @@
+\documentclass[12pt]{exam}
+\printanswers
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, total={6in,4in}]{geometry}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tabto}
+\usepackage{makecell}
+\usepackage{multicol}
+\usepackage{enumerate}
+\geometry{left=2cm, right=2cm, top=2cm, bottom=2cm}
+
+\title{
+  Assignment 4
+}
+
+\author{Pranav Wadhwa}
+
+\begin{document}
+\maketitle
+\noindent
+
+
+\begin{questions}
+
+  \question{}
+  Answer each part TRUE or FALSE
+
+  \begin{multicols}{2}
+  \begin{enumerate}[a.]
+
+    \item $2^{\log^{2}n}\in \mathcal{O}(n^{k})$
+    \item $n!\in 2^{\mathcal{O}(n\log n)}$
+    \item $3^{n}\in \mathcal{O}(2^{n\log n})$
+    \item $n^{k}\in o(2^{\log n})$
+    \item $2^{n}\in o(n!)$
+    \item $\frac{1}{n} \in o(1)$
+
+  \end{enumerate}
+  \end{multicols}
+
+
+  \question{} % q2
+
+  Show that P is closed under union, complement, concatenation, and star.
+
+
+  \question{} % q3
+
+  Show that NP is closed under union, concatenation, and star
+
+  \question{} % q4
+
+  We normally assume natural numbers are represented in binary, such that a number $n\in \mathcal{N}$ is represented by the string $b_{\lfloor\log n \rfloor}b_{\lfloor \log n \rfloor - 1} \dots b_{0}, b_{i} \in \{0,1\}$, and $n=\Sigma^{\lfloor \log n \rfloor}_{i=0}b_{i}2^{i}$.
+  We could also write a number in unary, where a number $n\in \mathcal{N}$ is represented by $n$ consecutive 1s.
+  The problem of factoring a number in binary is not known to be in P, but what if the number is given in unary?
+  Prove your answer.
+
+
+  \question{} % q5
+
+  Suppose the number $k$ and the graph $G$ are given, and we want to know if there exists a subset $S$ of size $k$ from the vertices of $G$ such that there is no edge between them in $G$.
+  Prove that this problem is NP-Complete.
+
+
+  \question{} % q6
+
+  Show the following languge is NP-Complete:
+  \[DOUBLE-SAT=\{\langle \phi \rangle | \phi \text{ has at least 2 satisfying assignments }\}\]
+
+
+  \question{} % q7
+
+  Let $S$ be a set and let $C$ be a collection of subsets of $S$. A set $S'\subseteq S$ is called a set hitting set for $C$ if every subset in $C$ contains at least an element in $S'$. Let
+  \[HITSET = \{\langle C,k \rangle | C \text{ has a hitting set of size } k\}\]
+
+  Prove that $HITSET$ is NP-Complete.
+
+
+  \question{} % q8
+
+  \begin{enumerate}[a.]
+    \item Prove that NP $=$ coNP iff there is an NP-Complete problem in coNP.
+    \item Show that if coNP $\neq$ NP then P $\neq$ NP.
+
+  \end{enumerate}
+
+
+  \question{} % q9
+
+  Show that P is closed under homomorphism iff P $=$ NP
+
+  \question{} % q10
+
+  Let $CNF_{k} = \{\langle \phi \rangle | \phi \text{ is a satisfiable cnf-formula where each variable appears in at most } k \text{ places }\}$.
+
+  \begin{enumerate}[a.]
+    \item Show that $CNF_{2} \in P$
+    \item Show that $CNF_{3}$ is NP-complete
+  \end{enumerate}
+
+
+\end{questions}
+
+
+\end{document}
