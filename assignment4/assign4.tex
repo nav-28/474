@@ -24,7 +24,7 @@
 
 \begin{questions}
 
-  \question{}
+  \question{} % q1
   Answer each part TRUE or FALSE
 
   \begin{multicols}{2}
@@ -38,7 +38,38 @@
     \item $\frac{1}{n} \in o(1)$
 
   \end{enumerate}
-  \end{multicols}
+\end{multicols}
+
+
+\begin{solution}
+
+  \begin{enumerate}[a.]
+    \item $2^{\log^{2}n}\in \mathcal{O}(n^{k})$
+
+          True\\
+          Proof: $2^{\log^{2}n} = n$ and $n\in \mathcal{O}(n^{k})$
+    \item $n!\in 2^{\mathcal{O}(n\log n)}$
+
+          True
+
+    \item $3^{n}\in \mathcal{O}(2^{n\log n})$
+
+          False\\
+          As $3^{n}$ grows much faster than $2^{n\log n}$
+    \item $n^{k}\in o(2^{\log n})$
+          True\\
+
+    \item $2^{n}\in o(n!)$
+
+    \item $\frac{1}{n} \in o(1)$
+
+          True as $1/n$ is strictly smaller than 1 after $n>1$
+
+  \end{enumerate}
+
+
+
+\end{solution}
 
 
   \question{} % q2
