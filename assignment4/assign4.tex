@@ -60,6 +60,7 @@
           True\\
 
     \item $2^{n}\in o(n!)$
+          True
 
     \item $\frac{1}{n} \in o(1)$
 
@@ -76,10 +77,60 @@
 
   Show that P is closed under union, complement, concatenation, and star.
 
+  \begin{solution}
+    Let $M_{1}$ and $M_{2}$ be 2 turing machines which decide languages $L_{1}$ and $L_{2}$ in polynomial time.
+    \begin{enumerate}
+      \item union\\
+            Construct a turing machine $M_{U}$ which decides the union of $L_{1}$ and $L_{2}$.
+
+            $M_{U}$ on input $w$:\\
+            \null \quad 1. Run $M_{1}$ on $w$. If accept return accept.\\
+            \null \quad 2. Run $M_{w}$ on $w$. If accept return accept.\\
+            3. If both reject then return reject.
+
+            Since both $M_{1}$ and $M_{2}$ decide in polynomial time then the union will also decide in polynomial time.
+
+      \item complement\\
+            Construct a deterministic turing machine $M_{\bar C}$ which decies on the complement of $L_{1}$.\\
+
+            $M_{\bar C}$ on input $w$:\\
+            \null \quad 1. Run $M_{1}$ on input $w$\\
+            \null \quad 2. If $M_{1}$ accept then return reject, else return accept.
+
+            Since $M_{1}$ runs in polynomial time then $M_{\bar C}$ also runs in polynomial time.
+
+      \item concatenation\\
+            Construct a determisnistic TM $M_{C}$ which decides the concatenation of languages $L_{1}$ and $L_{2}$ in polynomial time.\\
+
+            $M_{C}$ on input $w$:
+            \null \quad  1. Guess the partition of input $w$ into 2 string such as $w = xy$.\\
+            \null \quad 2. Run $M_{1}$ on input $x$. If not accept return reject.\\
+            \null \quad 3. Run $M_{2}$ on input $y$. If not accept return reject.\\
+            \null \quad 4. If both accept then return accept
+
+            Since both $M_{1}$ and $M_{2}$ run in polynomial time then $M_{C}$ also runs in polynomial time.
+
+
+      \item star\\
+            Construct a determisnistic TM $M_{S}$ which decides on $L_{1}^{*}$. This is similar to concatenation where we divide the input $w$ into several sub strings.
+
+            $M_{S}$ on input $w$:\\
+            \null \quad 1. Guess the partition $w = x_{1}x_{2}\dots x_{n}$.\\
+            \null \quad 2. If $M_{1}$ accepts all of $x_{n}$ then return accept else return reject.
+
+            Since $M_{1}$ runs in polynomial time then $M_{S}$ also runs in polynomial time.
+
+    \end{enumerate}
+
+  \end{solution}
 
   \question{} % q3
 
   Show that NP is closed under union, concatenation, and star
+
+  \begin{solution}
+    The solution is similar to Q2, instead of using a deterministic TM we would use a non-deterministic TM which would go through every branch to check if the input is accept by the TM.
+  \end{solution}
 
   \question{} % q4
 
@@ -88,11 +139,50 @@
   The problem of factoring a number in binary is not known to be in P, but what if the number is given in unary?
   Prove your answer.
 
+  \begin{solution}
+
+    Lets look at a naive algorithm of finding factors of a input n.
+
+    for i = 1 to $\sqrt n$:\\
+    \null \quad if (n \% i == a):\\
+    \null \quad \quad add i as a factor
+
+    If the numbers are represented in binary then the length of the input is $k = \log_{2} n$ bits which makes the time complexity to be $\mathcal{O}(\sqrt{2^{k}})$ therby making the problem to be exponential.
+
+
+    In the case of unary the lenth of the input is equal to $n$ bits which makes the time complexity to be linear. Therefor this algorithm is in $P$.
+
+  \end{solution}
 
   \question{} % q5
 
   Suppose the number $k$ and the graph $G$ are given, and we want to know if there exists a subset $S$ of size $k$ from the vertices of $G$ such that there is no edge between them in $G$.
   Prove that this problem is NP-Complete.
+
+  \begin{solution}
+
+    NO-EDGE = $\{ \langle G, k\rangle : G$ is an undirected graph and has a subset S of size k with no edges between them $\}$
+
+    Show that this problem is NP, a certificate for this problem is given as follows:
+
+    \textbf{Proof:} certificate is a subset of vertices c\\
+    \emph{V$G,k,c$}:\\
+    \null \quad verify that $G$ has $k$ verticies.\\
+    \null \quad verify that there are no edges between the nodes in $c$ in graph $G$\\
+    \null \quad accept $\leftrightarrow$ both pass
+
+    Show that this problem in NP-Complete
+
+    \textbf{Proof:} We use reduction from $CLIQUE \leq_{p} NO-EDGE$
+
+    Given a graph $G$ with $k$ clique. We can construst a graph $G'$ with $V'$ vertices and $E'$ edges.\\
+    \null \quad We find the complement of the graph $G$ to produce $G'$.\\
+    \null \quad Traverse through $G$ and where there is an edge between 2 vertices remove it and where there is no edge we add an edge between the pair of verticles.
+    \null \quad We get the complement graph $G'$ the edges and $k$ is the number of verticles that have no edges between them.
+
+    This runs in poly time.
+
+  \end{solution}
 
 
   \question{} % q6
@@ -100,6 +190,24 @@
   Show the following languge is NP-Complete:
   \[DOUBLE-SAT=\{\langle \phi \rangle | \phi \text{ has at least 2 satisfying assignments }\}\]
 
+  \begin{solution}
+
+    Showing DOUBLE-SAT is NP is easy; a certificate is simply a set of values of the variables in $\phi$ which make the boolean expression evaluate to true.
+
+    We will use poly time reduction to prove that DOUBLE-SAT is NP-Complete by showing $SAT \leq_{p} DOUBLE-SAT$
+
+
+    \textbf{Proof:}\\
+    We create a non-deterministic TM $M$ such that it computes a polytime reduction of $\phi \to \phi'$\\
+    $M$ on input $\langle \phi \rangle$ which a Boolean formula such that $\phi$ has variables $c_{1}, c_{2}, \dots , c_{k}$.
+
+    \null \quad 1. Create $\phi' = \phi \land (x \lor \bar x)$ with $x$ as a new variable.\\
+    \null \quad 2. Run $\phi$ on SAT.\\
+    \null \quad 3. If SAT accepts then $\phi'$ has at least 2 satisfying assignment. If $\phi \notin SAT$ then $\phi' \notin DOUBLE-SAT$
+
+    We showed in TM $M$ that $\phi \in SAT$ iff $f(\phi)\in DOUBLE-SAT$ therefore DOUBLE-SAT is NP-Complete.
+
+  \end{solution}
 
   \question{} % q7
 
@@ -108,15 +216,64 @@
 
   Prove that $HITSET$ is NP-Complete.
 
+  \begin{solution}
+    We can show that HITSET is in $NP$
+
+
+    \textbf{Proof:} certificate is a certificate is simply a the set $S'$ where $S' \cap S_{i} \neq \emptyset, \forall S_{i} \in C$.
+
+    \emph{V($C, k, c$)}:\\
+    \null \quad verify that $c$ is in $C$\\
+    \null \quad verify that each set in $C$ has $S_{i}\cap c \neq \emptyset$\\
+    \null \quad accept $\leftrightarrow$ both pass
+
+    runs in polytime
+
+    Now show that $VERTEX-COVER \leq_{p} HITSET$
+
+
+
+
+  \end{solution}
 
   \question{} % q8
 
   \begin{enumerate}[a.]
     \item Prove that NP $=$ coNP iff there is an NP-Complete problem in coNP.
     \item Show that if coNP $\neq$ NP then P $\neq$ NP.
-
   \end{enumerate}
 
+
+  \begin{solution}
+    \begin{enumerate}[a.]
+      \item NP $=$ coNP iff there is an NP-Complete problem in coNP\\
+
+            \textbf{Proof:}\\
+            Part 1: if there is an NP-Complete problem in $coNP$ then $NP=coNP$
+
+
+            Let $L$ be an language that is NP-Complete and $L\in coNP$.
+            Let $L_{2}$ be a problem in NP then there is a polytime reduction $f$ from $L_{2} \to L$ since $L$ is NP-Complete.
+            Now since $L_{2}\to L$ exists this shows that $L_{2}$ is also in $coNP$. So $NP=coNP$
+
+
+            Part 2: if $NP=coNP$ then there is an NP-complete in coNP
+
+            This statement is true itself since $NP=coNP$ there would be problem which are NP-complete in $coNP$
+
+
+      \item if coNP $\neq$ NP then $P\neq NP$
+
+            \textbf{Proof:}\\
+
+            We can prove this by showing the contrapositive.\\
+            If $P=NP$ then coNP$=$NP
+
+            Let $L$ be a problem which in in $P$. Since $P=NP$ then $L$ is also in $NP$. We know that $P$ is closed under complement then $NP$ would also be closed under complement. Therefore $\bar L$ is also in $P$ and $NP$. This shows that $NP = coNP$.
+
+    \end{enumerate}
+
+  \end{solution}
 
   \question{} % q9
 
@@ -132,6 +289,47 @@
   \end{enumerate}
 
 
+
+  \begin{solution}
+    \begin{enumerate}[a.]
+
+      \item Show that $CNF_{2}\in P$
+
+            We give a way to fine out if a variable appears more than twice in a binary formula. We say it case by case:
+
+            Let $x$ be a variables in $\phi$\\
+            \null \quad 1. If $x$ appeas only once as $x$ or $\bar x$ then we can satisfy the clause it appears in and move onto next variable.\\
+            \null \quad 2. If $x$ or $\bar x$ appears more 2 times then $\phi$ is not satisfiable\\
+            \null \quad 3. If $x$ or $\bar x$ appears in the same clause then $\phi$ is not satisfiable.\\
+            \null \quad 4. If $x$ or $\bar x$ appears in different clauses such as $(x\lor \dots) \land (\bar x \lor \dots)$ then it satisfiable only if other variables in the clauses have an satisfying assignment as both $x$ and $\bar x$ cannot be satisfiable at the same time.
+
+            We use this method and easily see that it reduces the boolean formula each time therefore it runs in polynomial time and is in P.
+
+
+      \item Show that $CNF_{3}$ is NP-Complete.
+
+            Check that $CNF_{3}\in NP$
+
+            \textbf{Proof:} certificate is a satisfying argument\\
+            \emph{V($\phi, c$)}:\\
+            \null \quad verfiy each variables appeas at most 3 times\\
+            \null \quad evaluate $\phi(c)$\\
+            \null \quad accept $\leftrightarrow$ both pass
+
+            Prove that $3-SAT\leq_{p} CNF_{3}$
+
+
+
+
+
+
+
+    \end{enumerate}
+
+
+
+  \end{solution}
+  
 \end{questions}
 
 
