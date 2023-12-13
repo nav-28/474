@@ -1,0 +1,18 @@
+\contentsline {chapter}{\numberline {1}Regular Languages}{2}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Terms}{2}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Alphabet}{2}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}String}{2}{subsection.1.1.2}%
+\contentsline {section}{\numberline {1.2}Decision Problems}{2}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Finite Automaton}{3}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Definition of Computation}{3}{subsection.1.3.1}%
+\contentsline {section}{\numberline {1.4}Languages}{4}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Regular operations on Languages}{4}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Nondeterministic finite automata}{6}{section.1.6}%
+\contentsline {subsection}{\numberline {1.6.1}Definition of nondeterministic computation}{6}{subsection.1.6.1}%
+\contentsline {section}{\numberline {1.7}NFA and DFA}{7}{section.1.7}%
+\contentsline {section}{\numberline {1.8}Regular Operations on Language}{7}{section.1.8}%
+\contentsline {section}{\numberline {1.9}Regular Expression}{8}{section.1.9}%
+\contentsline {section}{\numberline {1.10}Limits of Finite State Computation}{12}{section.1.10}%
+\contentsline {chapter}{\numberline {2}Context-Free Languages}{13}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Pushdown Automata}{13}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Context-Free Grammar}{14}{section.2.2}%

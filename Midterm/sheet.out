@@ -1,0 +1,18 @@
+\BOOKMARK [0][-]{chapter.1}{Regular Languages}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Terms}{chapter.1}% 2
+\BOOKMARK [2][-]{subsection.1.1.1}{Alphabet}{section.1.1}% 3
+\BOOKMARK [2][-]{subsection.1.1.2}{String}{section.1.1}% 4
+\BOOKMARK [1][-]{section.1.2}{Decision Problems}{chapter.1}% 5
+\BOOKMARK [1][-]{section.1.3}{Finite Automaton}{chapter.1}% 6
+\BOOKMARK [2][-]{subsection.1.3.1}{Definition of Computation}{section.1.3}% 7
+\BOOKMARK [1][-]{section.1.4}{Languages}{chapter.1}% 8
+\BOOKMARK [1][-]{section.1.5}{Regular operations on Languages}{chapter.1}% 9
+\BOOKMARK [1][-]{section.1.6}{Nondeterministic finite automata}{chapter.1}% 10
+\BOOKMARK [2][-]{subsection.1.6.1}{Definition of nondeterministic computation}{section.1.6}% 11
+\BOOKMARK [1][-]{section.1.7}{NFA and DFA}{chapter.1}% 12
+\BOOKMARK [1][-]{section.1.8}{Regular Operations on Language}{chapter.1}% 13
+\BOOKMARK [1][-]{section.1.9}{Regular Expression}{chapter.1}% 14
+\BOOKMARK [1][-]{section.1.10}{Limits of Finite State Computation}{chapter.1}% 15
+\BOOKMARK [0][-]{chapter.2}{Context-Free Languages}{}% 16
+\BOOKMARK [1][-]{section.2.1}{Pushdown Automata}{chapter.2}% 17
+\BOOKMARK [1][-]{section.2.2}{Context-Free Grammar}{chapter.2}% 18
